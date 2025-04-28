@@ -8,11 +8,10 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-constructor(private authService: AuthService,
-    private router: Router){}
+  constructor(private authService: AuthService, private router: Router) {}
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/demo']);
   }
 }

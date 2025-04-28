@@ -33,6 +33,8 @@ export class RegisterComponent {
     }
     this.authService.register(this.registerForm.value).subscribe(
       (response) => {
+        console.log('response Register', response);
+        
         this.router.navigate(['/login']); // Dopo la registrazione, vai alla pagina di login
       },
       (error) => {

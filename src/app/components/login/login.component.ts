@@ -30,6 +30,8 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe(
       (response) => {
         this.authService.saveToken(response.token); // Salva il token
+        console.log("La response di LOGIN", response);
+        
         this.router.navigate(['/home']); // Vai alla pagina di dashboard
       },
       (error) => {

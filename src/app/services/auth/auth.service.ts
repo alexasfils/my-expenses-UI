@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import { environment, properties } from '../../../environments/environment';
+import { properties } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserAuthDTO, UserDTO, UserRequestDTO } from '../../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = `${properties.domainApi}/auth`; // Cambia in base al tuo URL API
-
-  private baseUrl: String = properties.baseUrl + properties.separator + properties.domainApi;
+  private baseUrl: String =
+    properties.baseUrl + properties.separator + properties.domainApi;
 
   constructor(private http: HttpClient) {}
 
   // Registrazione
-  register(user: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, user);
+  register(user: UserRequestDTO): Observable<UserRequestDTO> {
+    return this.http.post<UserRequestDTO>(`${this.baseUrl}/register`, user);
   }
 
   // Login
-  login(credentials: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, credentials);
+  login(credentials: UserAuthDTO): Observable<UserAuthDTO> {
+    return this.http.post<UserAuthDTO>(`${this.baseUrl}/login`, credentials);
   }
 
   // Salva il token in localStorage
