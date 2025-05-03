@@ -1,21 +1,23 @@
-<div class="login-form">
-    <h2>Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label for="email">Email</label>
-            <input id="email" formControlName="email" type="email" />
-            <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
-                Email is required.
-            </div>
+<!-- MODALE CUSTOM -->
+<div class="custom-modal-backdrop">
+  <div class="custom-modal">
+    <div class="custom-modal-header">
+      <h5>Login</h5>
+      <button (click)="closeModal()" class="btn-close">×</button>
+    </div>
+    <div class="custom-modal-body">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="email" />
         </div>
-        <div>
-            <label for="password">Password</label>
-            <input id="password" formControlName="password" type="password" />
-            <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
-                Password is required.
-            </div>
+        <div class="form-group mt-2">
+          <label>Password</label>
+          <input type="password" class="form-control" formControlName="password" />
         </div>
-        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-        <button type="submit" [disabled]="loginForm.invalid">Login</button>
-    </form>
+        <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
+      </form>
+    </div>
+  </div>
 </div>

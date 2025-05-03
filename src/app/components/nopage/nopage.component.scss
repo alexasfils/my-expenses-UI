@@ -1,0 +1,32 @@
+.no-page-container {
+    text-align: center;
+    padding: 50px;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.no-page-container h1 {
+    font-size: 80px;
+    margin: 0;
+    color: #0d6efd;
+}
+
+.no-page-container .error-message {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.no-page-container .home-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.no-page-container .home-link:hover {
+    background-color: #5699ff;
+}

@@ -1,4 +1,35 @@
-.login-form{
-    background-color: aqua;
-    border:1px solid blue;
+.custom-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.custom-modal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
 }

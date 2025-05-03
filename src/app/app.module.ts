@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DemoComponent } from './pages/demo/demo.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NopageComponent } from './components/nopage/nopage.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     RegisterComponent,
     DemoComponent,
     NavbarComponent,
+    NopageComponent,
   ],
   imports: [
     BrowserModule,

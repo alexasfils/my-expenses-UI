@@ -1,4 +1,27 @@
-<div>
-    <button (click)="handleLogin()">Login</button>
-    <button (click)="handleRegister()">Register</button>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div *ngIf="user">
+            <h1>Dashboard</h1>
+        </div>
+        <form *ngIf="user" class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+
+        <div *ngIf="!user">
+            <a class="navbar-brand" href="#">Home</a>
+        </div>
+        <div *ngIf="!user">
+            <button class="btn btn btn-outline-primary m-2" (click)="handleLogin()">Login</button>
+            <button class="btn btn-primary" (click)="handleRegister()">Register</button>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- Mostra la modale solo se showLoginModal è true -->
+<app-login *ngIf="showLoginModal" (close)="onCloseLoginModal()"></app-login>
+
+<app-register *ngIf="showRegisterModal" (close)="onCloseRegisterModal()"></app-register>
