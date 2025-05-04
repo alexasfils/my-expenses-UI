@@ -10,8 +10,5 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/demo']);
-  }
+
 }

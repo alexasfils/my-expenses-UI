@@ -34,7 +34,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('La response di LOGIN', response);
-        this.router.navigate(['/home']); // Vai alla pagina di home
+        this.router.navigate(['/']); // Vai alla pagina di home
         this.closeModal();
       },
       error: (error) => {

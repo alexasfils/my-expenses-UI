@@ -1,0 +1,27 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of expenses">
+            <td>{{ e.expenseDate }}</td>
+            <td>{{ e.name }}</td>
+            <td>{{ e.amount }} €</td>
+            <td>{{ e.description }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            Totale: {{ list!.totalExpense }} €
+        </tr>
+    </tbody>
+</table>

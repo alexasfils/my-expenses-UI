@@ -11,6 +11,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { DemoComponent } from './pages/demo/demo.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NopageComponent } from './components/nopage/nopage.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ExpenseDemoComponent } from './demo/expense-demo/expense-demo.component';
+import { ExpenseListTableComponent } from './shared/table/expense-list-table/expense-list-table.component';
+import { ExpenselistpageComponent } from './pages/expenselistpage/expenselistpage.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { NopageComponent } from './components/nopage/nopage.component';
     DemoComponent,
     NavbarComponent,
     NopageComponent,
+    FooterComponent,
+    ExpenseDemoComponent,
+    ExpenseListTableComponent,
+    ExpenselistpageComponent,
   ],
   imports: [
     BrowserModule,

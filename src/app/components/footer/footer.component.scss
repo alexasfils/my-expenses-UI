@@ -1,0 +1,23 @@
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.mt-auto {
+    margin-top: auto !important;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+footer {
+    display: block;
+    unicode-bidi: isolate;
+}

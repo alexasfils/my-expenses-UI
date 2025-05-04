@@ -29,11 +29,16 @@ export class NavbarComponent implements OnInit {
     this.showLoginModal = false;
   }
 
-handleRegister() {
+  handleRegister() {
     this.showRegisterModal = true;
   }
 
   onCloseRegisterModal() {
     this.showRegisterModal = false;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/demo']);
   }
 }

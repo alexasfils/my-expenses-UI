@@ -1,7 +1,12 @@
 <app-navbar></app-navbar>
 
-<main class="main">
-  
-</main>
-<router-outlet />
+<!-- Contenitore principale con flexbox -->
+<div class="app-container">
+    <!-- Contenuto principale che occupa lo spazio disponibile -->
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
 
+    <!-- Footer sempre in fondo -->
+    <app-footer></app-footer>
+</div>
