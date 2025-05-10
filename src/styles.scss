@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+    /* Impostiamo l'altezza della pagina al 100% */
+    margin: 0;
+    /* Rimuoviamo eventuali margini predefiniti */
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    /* Colonna per il layout */
+    height: 100%;
+    /* L'altezza del contenitore sarà 100% dell'altezza della finestra */
+}
+
+.main-content {
+    flex-grow: 1;
+    /* Occupiamo tutto lo spazio disponibile */
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+}

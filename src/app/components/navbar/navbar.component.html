@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div *ngIf="user">
+            <a routerLink="/">Dashboard</a>
+        </div>
+        
+        <form *ngIf="user" class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <div *ngIf="user" class="btn-group">
+            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" routerLink="/manage-expenses">Manage Expenses</a></li>
+                <li><a class="dropdown-item" routerLink="/expenses">My Expenses</a></li>
+
+                
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item cursor-pointer" (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+
+        <div *ngIf="!user">
+            <a class="navbar-brand" href="#">Home</a>
+        </div>
+        <div *ngIf="!user">
+            <button class="btn btn btn-outline-primary m-2" (click)="handleLogin()">Login</button>
+            <button class="btn btn-primary" (click)="handleRegister()">Register</button>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- Mostra la modale solo se showLoginModal è true -->
+<app-login *ngIf="showLoginModal" (close)="onCloseLoginModal()"></app-login>
+
+<app-register *ngIf="showRegisterModal" (close)="onCloseRegisterModal()"></app-register>

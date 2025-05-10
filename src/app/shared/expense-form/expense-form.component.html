@@ -1,0 +1,35 @@
+<div class="custom-modal-backdrop">
+    <div class="custom-modal">
+        <div class="custom-modal-header">
+            <h5>Add Expense</h5>
+            <button (click)="closeModal()" class="btn-close">×</button>
+        </div>
+        <div class="custom-modal-body">
+            <form class="row g-3" [formGroup]="expenseForm" (ngSubmit)="addExpense()">
+                <div><label>Name</label>
+                    <div class="col-3 d-flex">
+                        <input class="form-control" formControlName="name" placeholder="name expens">
+                    </div>
+                    <label>Date</label>
+                    <div class="col-3 d-flex">
+                        <input class="form-control" type="date" formControlName="date" placeholder="Date">
+                    </div>
+                    <label>Amount</label>
+                    <div class="col-3 d-flex">
+                        <input class="form-control" type="number" formControlName="amount" placeholder="amount">
+                    </div>
+                    <label>Description</label>
+                    <div class="col-3 d-flex">
+                        <input class="form-control" type="text" formControlName="description" placeholder="description">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-success me-3" type="submit" [disabled]="!expenseForm.valid"><i
+                            class="bi bi-floppy2-fill"></i></button>
+                    <button type="button" class="btn btn-secondary" (click)="reset()"><i
+                            class="bi bi-x-lg"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="m-2" *ngIf="!expensesList.length">
+    <app-expense-list-form (onCreatedList)="onCreatedList($event)"></app-expense-list-form>
+</div>
+
+<div *ngIf="expensesList" class="card">
+    <div *ngFor="let list of expensesList">
+<h2>{{ list.name }}</h2>
+    <div class="card-body">
+        <button class="btn btn-primary" (click)="showExpenseForm()">Add Expense</button>
+        <app-expense-list-table *ngIf="expensesList" [expenseLists]="expensesList"></app-expense-list-table>
+
+        <div *ngIf="showExpenseFormModal">
+            <app-expense-form *ngIf="list" [list]="list" (onCreatedExpense)="onCreatedExpense()"
+                (close)="onCloseExpenseFormModal()"></app-expense-form>
+        </div>
+    </div>
+    </div>
+</div>

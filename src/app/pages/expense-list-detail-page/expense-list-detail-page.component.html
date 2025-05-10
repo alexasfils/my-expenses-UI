@@ -1,0 +1,12 @@
+<button (click)="openExpenseModalForm()" class="btn btn-outline-primary">
+    Add Expense
+</button>
+
+<app-expense-table [expenses]="expenseList?.expenses || []" [totalExpense]="expenseList?.totalExpense || 0"></app-expense-table>
+
+<div *ngIf="showExpenseFormModal" class="custom-modal-backdrop">
+  <div class="modal-body">
+    <app-expense-form [list]="expenseList!" (onCreatedExpense)="onExpenseCreated()" (close)="onCloseExpenseFormModal()">
+    </app-expense-form>
+</div>  
+</div>

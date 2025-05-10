@@ -1,0 +1,60 @@
+<div class="custom-modal-backdrop">
+    <div class="custom-modal">
+        <div class="custom-modal-header">
+            <h2>Register</h2>
+            <button (click)="closeModal()" class="btn-close">×</button>
+        </div>
+        <div class="custom-modal-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" class="form-control" formControlName="name" type="text" />
+                    <div *ngIf="registerForm.controls['name'].invalid && registerForm.controls['name'].touched">
+                        <div *ngIf="registerForm.controls['name'].hasError('required')">Name is required.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input id="surname" class="form-control" formControlName="surname" type="text" />
+                    <div *ngIf="registerForm.controls['surname'].invalid && registerForm.controls['surname'].touched">
+                        <div *ngIf="registerForm.controls['surname'].hasError('required')">Surname is required.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" class="form-control" formControlName="email" type="email" />
+                    <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
+                        <div *ngIf="registerForm.controls['email'].hasError('required')">Email is required.</div>
+                        <div *ngIf="registerForm.controls['email'].hasError('email')">Invalid email format.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input id="phone" class="form-control" formControlName="phone" type="text" />
+                    <div *ngIf="registerForm.controls['phone'].invalid && registerForm.controls['phone'].touched">
+                        <div *ngIf="registerForm.controls['phone'].hasError('required')">Phone is required.</div>
+                        <div *ngIf="registerForm.controls['phone'].hasError('pattern')">Invalid phone number.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" class="form-control" formControlName="password" type="password" />
+                    <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+                        <div *ngIf="registerForm.controls['password'].hasError('required')">Password is required.</div>
+                        <div *ngIf="registerForm.controls['password'].hasError('minlength')">Password must be at least 6
+                            characters long.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <input id="currency" class="form-control" formControlName="currency" type="text" />
+                    <div *ngIf="registerForm.controls['currency'].invalid && registerForm.controls['currency'].touched">
+                        <div *ngIf="registerForm.controls['currency'].hasError('required')">Currency is required.</div>
+                    </div>
+                </div>
+                <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+                <button class="btn btn-primary mt-3" type="submit" [disabled]="registerForm.invalid">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
