@@ -5,17 +5,22 @@ import { ExpenseListDTO } from '../../types/types';
 import { properties } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExpenseListService {
+  private baseUrl: String = `${properties.baseUrl}${properties.separator}${properties.domainApi}/expenses`;
 
-  private baseUrl: String =
-      properties.baseUrl + properties.separator + properties.domainApi;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getTreRandomExpensesLists(): Observable<ExpenseListDTO []> {
-    return this.http.get<ExpenseListDTO[]>(`${this.baseUrl}/getdemo`);
+  getAllUserExpensesLists(): Observable<ExpenseListDTO[]> {
+    return this.http.get<ExpenseListDTO[]>(`${this.baseUrl}/all`);
   }
 
+  getExpenseById(expenseListId: number): Observable<ExpenseListDTO> {
+    return this.http.get<ExpenseListDTO>(`${this.baseUrl}/${expenseListId}`);
+  }
+
+  createExpenseList(expenseList: ExpenseListDTO): Observable<ExpenseListDTO> {
+    return this.http.post<ExpenseListDTO>(`${this.baseUrl}`, expenseList);
+  }
 }

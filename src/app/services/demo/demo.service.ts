@@ -28,8 +28,8 @@ export class DemoService {
     return this.http.post(`${this.baseUrl}/${listId}/expenses`, expense);
   }
 
-  getExpenses(listId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${listId}/expenses`);
+  getExpenseListById(listId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${listId}/expenses`);
   }
 
   reset(): Observable<void> {

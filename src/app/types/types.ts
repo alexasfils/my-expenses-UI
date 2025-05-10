@@ -19,7 +19,7 @@ export type ExpenseListDTO = {
   id: number;
   name: string;
   budget: number;
-  month: number,
+  month: number;
   totalExpense: number;
   expenses: ExpenseDTO[];
 };

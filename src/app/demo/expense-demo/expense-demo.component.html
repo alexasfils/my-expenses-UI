@@ -1,64 +1,18 @@
-<div class="m-2" *ngIf="!list">
-    <h3>Crea la tua lista demo</h3>
-    <form class="row g-3" [formGroup]="expenseListForm" (ngSubmit)="createList(expenseListForm.value)">
-        <div>
-            <div class="col-3">
-                <label>List Name</label>
-                <input class="form-control" formControlName="name" placeholder="Nome Lista">
-
-            </div>
-            <div class="col-3">
-                <label>Month</label>
-                <input class="form-control" type="number" max="12" min="1" formControlName="month" placeholder="Mese">
-            </div>
-
-            <div class="col-3">
-                <label>Budget</label>
-                <input class="form-control" type="number" min="0" formControlName="budget" placeholder="budget">
-            </div>
-        </div>
-
-        <div class="col-auto">
-
-            <button class="btn btn-primary" type="submit">Crea Lista</button>
-        </div>
-
-
-    </form>
+<div class="m-2" *ngIf="!expensesList.length">
+    <app-expense-list-form (onCreatedList)="onCreatedList($event)"></app-expense-list-form>
 </div>
 
-<div *ngIf="list" class="card">
-    <h2>{{ list!.name }}</h2>
+<div *ngIf="expensesList" class="card">
+    <div *ngFor="let list of expensesList">
+<h2>{{ list.name }}</h2>
     <div class="card-body">
-        <app-expense-list-table *ngIf="expenses.length" [expenses]="expenses" [list]="list"></app-expense-list-table>
-
-        <div *ngIf="IsSowed">
-            <form class="row g-3" [formGroup]="expenseForm" (ngSubmit)="addExpense()">
-                <div><label>Name</label>
-                    <div class="col-3 d-flex">
-                        <input class="form-control" formControlName="name" placeholder="name expens">
-                    </div>
-                    <label>Date</label>
-                    <div class="col-3 d-flex">
-                        <input class="form-control" type="date" formControlName="date" placeholder="Date">
-                    </div>
-                    <label>Amounth</label>
-                    <div class="col-3 d-flex">
-                        <input class="form-control" type="number" formControlName="amount" placeholder="amounth">
-                    </div>
-                    <label>Description</label>
-                    <div class="col-3 d-flex">
-                        <input class="form-control" type="text" formControlName="description" placeholder="description">
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-outline-success me-3" type="submit"><i
-                            class="bi bi-floppy2-fill"></i></button>
-                    <button class="btn btn-outline-danger" (click)="reset()"><i class="bi bi-x-lg"></i></button>
-                </div>
-            </form>
-        </div>
         <button class="btn btn-primary" (click)="showExpenseForm()">Add Expense</button>
-    </div>
+        <app-expense-list-table *ngIf="expensesList" [expenseLists]="expensesList"></app-expense-list-table>
 
+        <div *ngIf="showExpenseFormModal">
+            <app-expense-form *ngIf="list" [list]="list" (onCreatedExpense)="onCreatedExpense()"
+                (close)="onCloseExpenseFormModal()"></app-expense-form>
+        </div>
+    </div>
+    </div>
 </div>

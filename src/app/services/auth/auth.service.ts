@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { properties } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { UserAuthDTO, UserDTO, UserRequestDTO } from '../../types/types';
 
@@ -81,5 +81,24 @@ export class AuthService {
     localStorage.removeItem('user');
     this.userDTO = undefined;
     this.userDTOBehaviorSubject.next(undefined);
+  }
+}
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService) {}
+
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    const token = this.authService.getToken(); // lo prende da localStorage
+    if (token) {
+      const cloned = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
+      });
+      return next.handle(cloned);
+    }
+    return next.handle(req);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ExpenseDTO, ExpenseListDTO } from '../../../types/types';
+import { ExpenseDTO, ExpenseListDTO, UserAuthDTO } from '../../../types/types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-expense-list-table',
@@ -8,5 +9,13 @@ import { ExpenseDTO, ExpenseListDTO } from '../../../types/types';
 })
 export class ExpenseListTableComponent {
   @Input() expenses: ExpenseDTO[] = [];
-  @Input() list: ExpenseListDTO | null = null;
+  @Input() expenseLists: ExpenseListDTO[] = [];
+
+  user?: UserAuthDTO;
+
+  constructor(private router: Router) {}
+
+  toDetailsPage(id: number) {
+    this.router.navigate(['/expense-list', id]);
+  }
 }
