@@ -21,6 +21,7 @@ import { ExpenseListFormComponent } from './shared/expense-list-form/expense-lis
 import { ExpenseListDetailPageComponent } from './pages/expense-list-detail-page/expense-list-detail-page.component';
 import { ExpenseFormComponent } from './shared/expense-form/expense-form.component';
 import { ExpenseTableComponent } from './shared/table/expense-table/expense-table.component';
+import { ModalComponent } from './shared/modals/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ExpenseTableComponent } from './shared/table/expense-table/expense-tabl
     ExpenseListDetailPageComponent,
     ExpenseFormComponent,
     ExpenseTableComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
