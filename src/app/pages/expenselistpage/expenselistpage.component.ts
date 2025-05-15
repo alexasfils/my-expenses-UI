@@ -3,6 +3,9 @@ import { ExpenseListDTO, UserAuthDTO } from '../../types/types';
 import { ExpenseListService } from '../../services/expenses/expense-list.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DemoService } from '../../services/demo/demo.service';
 
 @Component({
   selector: 'app-expenselistpage',
@@ -16,6 +19,7 @@ export class ExpenselistpageComponent {
   constructor(
     private expenseListService: ExpenseListService,
     private authService: AuthService,
+    private demoService: DemoService,
     private router: Router
   ) {
     this.authService.userDTOSubject$.subscribe((user) => (this.user = user));
@@ -38,6 +42,20 @@ export class ExpenselistpageComponent {
         },
         error: (err) => {
           console.log(' Retrieving falid', err);
+        },
+      });
+    }
+  }
+
+  deleteExpenseList(expenseListId: number) {
+    if (this.user) {
+      this.expenseListService.deleteExpenseListById(expenseListId).subscribe({
+        next: () => {
+          this.getExpesesLista();
+          console.log('List Deleted succesfully');
+        },
+        error: (err) => {
+          console.log('Deleting falid', err);
         },
       });
     }

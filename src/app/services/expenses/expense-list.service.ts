@@ -23,4 +23,8 @@ export class ExpenseListService {
   createExpenseList(expenseList: ExpenseListDTO): Observable<ExpenseListDTO> {
     return this.http.post<ExpenseListDTO>(`${this.baseUrl}`, expenseList);
   }
+
+  deleteExpenseListById(expenseListId: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/${expenseListId}`);
+  }
 }
