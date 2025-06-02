@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ExpenseListDTO, UserAuthDTO } from '../../types/types';
 import { ExpenseListService } from '../../services/expenses/expense-list.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class ExpenselistpageComponent {
   expenseLists: ExpenseListDTO[] = [];
+  listToUpdate?: ExpenseListDTO;
   user?: UserAuthDTO;
 
   constructor(
@@ -43,7 +44,36 @@ export class ExpenselistpageComponent {
     }
   }
 
+  deleteExpenseList(expenseListId: number) {
+    if (this.user) {
+      this.expenseListService.deleteExpenseListById(expenseListId).subscribe({
+        next: () => {
+          this.getExpesesLista();
+          console.log('List Deleted succesfully');
+        },
+        error: (err) => {
+          console.log('Deleting falid', err);
+        },
+      });
+    }
+  }
+
   toDetailsPage(id: number) {
     this.router.navigate(['/expense-list', id]);
   }
+
+  updateExpencceList(expenseList: ExpenseListDTO) {
+    if (this.user) { 
+      this.expenseListService.updateUserExpenseList(expenseList).subscribe({
+        next: (res) => {
+          this.getExpesesLista();
+          console.log('List Updated succesfully');
+        },
+        error: (err) => {
+          console.error('Updating falid', err);
+        },
+      });
+    }
+
+    }
 }

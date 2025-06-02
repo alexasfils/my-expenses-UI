@@ -4,6 +4,7 @@ import { ExpenseListService } from '../../services/expenses/expense-list.service
 import { ActivatedRoute } from '@angular/router';
 import { DemoService } from '../../services/demo/demo.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { ExpenseService } from '../../services/expense/expense.service';
 
 @Component({
   selector: 'app-expense-list-detail-page',
@@ -13,12 +14,14 @@ import { AuthService } from '../../services/auth/auth.service';
 export class ExpenseListDetailPageComponent implements OnInit {
   expenseList: ExpenseListDTO | null = null;
   user?: UserAuthDTO;
+  expenseId?: number;
 
   showExpenseFormModal = false;
   selectedList!: ExpenseListDTO;
 
   constructor(
     private expenseListService: ExpenseListService,
+    private expenseService: ExpenseService,
     private demoService: DemoService,
     private authService: AuthService,
     private route: ActivatedRoute
@@ -26,8 +29,8 @@ export class ExpenseListDetailPageComponent implements OnInit {
     this.authService.userDTOSubject$.subscribe((user) => (this.user = user));
   }
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.getExpenseList(id);
+    this.expenseId = Number(this.route.snapshot.paramMap.get('id'));
+    this.getExpenseList(this.expenseId);
   }
 
   getExpenseList(id: number) {
@@ -49,6 +52,44 @@ export class ExpenseListDetailPageComponent implements OnInit {
         },
         error(err) {
           console.log('Falied to find list', err);
+        },
+      });
+    }
+  }
+
+  updateExpense(expense: ExpenseDTO) {
+    this.expenseService.updateUserExpense(expense).subscribe({
+      next: () => {
+        this.getExpenseList(this.expenseId!);
+        console.log('Expense Updated succesfully');
+      },
+      error: (err) => {
+        console.error('Updating falid');
+      },
+    });
+  }
+
+  deleteExpense(id: number) {
+    if (this.user) {
+      this.expenseService.deleteExpenseById(id).subscribe({
+        next: () => {
+          this.getExpenseList(this.expenseId!);
+        },
+        error: (err) => {
+          console.log('Deleting falid', err);
+        },
+      });
+    }
+  }
+
+  resetExpenseList(id: number) {
+    if (this.user) {
+      this.expenseService.deleteAllExpenses(id).subscribe({
+        next: () => {
+          this.getExpenseList(id);
+        },
+        error: (err) => {
+          console.log('Deleting falid', err);
         },
       });
     }

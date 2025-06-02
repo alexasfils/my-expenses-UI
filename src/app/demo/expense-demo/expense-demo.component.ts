@@ -20,9 +20,21 @@ export class ExpenseDemoComponent implements OnInit {
   loadList() {
     this.demoService.getExpenseLists().subscribe((lists) => {
       console.log('expensesList', this.expensesList);
-        this.expensesList = lists;
-      
+      this.expensesList = lists;
     });
+  }
+
+  deleteExpenseList(expenseListId: number) {
+      this.demoService.deleteExpenseList(expenseListId).subscribe({
+        next: () => {
+          this.loadList();
+          console.log('Demo List Deleted succesfully');
+        },
+        error: (err) => {
+          console.log('Deleting falid', err);
+        },
+      });
+    
   }
   showExpenseForm() {
     this.showExpenseFormModal = true;

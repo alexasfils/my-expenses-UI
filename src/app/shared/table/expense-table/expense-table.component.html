@@ -1,4 +1,3 @@
-
 <table class="table table-striped">
     <thead>
         <tr>
@@ -7,23 +6,51 @@
             <th>Amount</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Actions</th>
+            <th *ngIf="user">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let e of expenses">
-            <td>{{ e.expenseDate }}</td>
-            <td>{{ e.name }}</td>
-            <td>{{ e.amount }} €</td>
-            <td>{{ e.description }}</td>
-            <td></td>
+        <tr *ngFor="let expense of expensesExtended">
+
             <td>
-                <button class="btn btn-outline-success me-2">
-                    <i class="bi bi-plus-circle"></i>
-                </button> 
-                <button class="btn btn-outline-danger me-2">
-                    <i class="bi bi-trash3-fill"></i>
-                </button>
+                <span *ngIf="!expense.isEditing">{{ expense.expenseDate }}</span>
+                <input *ngIf="expense.isEditing" type="date" [(ngModel)]="expense.expenseDate" />
+
+            </td>
+            <td>
+                <span *ngIf="!expense.isEditing">{{ expense.name }}</span>
+                <input *ngIf="expense.isEditing" type="text" [(ngModel)]="expense.name" />
+            </td>
+            <td>
+                <span *ngIf="!expense.isEditing">{{ expense.amount }} €</span>
+                <input *ngIf="expense.isEditing" type="number" [(ngModel)]="expense.amount" />
+            </td>
+            <td>
+                <span *ngIf="!expense.isEditing">{{ expense.description }}</span>
+                <input *ngIf="expense.isEditing" type="text" [(ngModel)]="expense.description" />
+            </td>
+            <td>
+                <span></span>
+            </td>
+            <td *ngIf="user">
+                <ng-container *ngIf="!expense.isEditing">
+                    <button class="btn btn-outline-warning me-2" (click)="startEditing(expense)">
+                        <i class="bi bi-plus-circle"></i>
+                    </button>
+                    <button class="btn btn-outline-danger me-2" (click)="openModal(removeList.bind(this), expense.id!)">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="expense.isEditing">
+                    <button class="btn btn-outline-success me-2" (click)="update(expense)">
+                        <i class="bi bi-floppy-fill"></i>
+                    </button>
+                    <button class="btn btn-danger me-2" (click)="cancel(expense)">
+                        <i class="bi bi-x-circle bi"></i>
+                    </button>
+
+                </ng-container>
+
             </td>
         </tr>
         <tr>
@@ -33,7 +60,7 @@
             <td></td>
             <td></td>
             <td>Totale: {{ totalExpense }} €</td>
-            
+
         </tr>
     </tbody>
 </table>
