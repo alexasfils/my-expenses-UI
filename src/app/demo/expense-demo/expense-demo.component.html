@@ -6,7 +6,7 @@
     <div *ngFor="let list of expensesList">
 <h2>{{ list.name }}</h2>
     <div class="card-body">
-        <button class="btn btn-primary" (click)="showExpenseForm()">Add Expense</button>
+        <button  *ngIf="!expensesList" class="btn btn-primary" (click)="showExpenseForm()">Add Expense</button>
         <app-expense-list-table *ngIf="expensesList" [expenseLists]="expensesList" (onDeleteList)="deleteExpenseList($event)"></app-expense-list-table>
 
         <div *ngIf="showExpenseFormModal">

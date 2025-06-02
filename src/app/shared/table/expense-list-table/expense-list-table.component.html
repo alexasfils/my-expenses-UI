@@ -4,7 +4,7 @@
             <th>Name</th>
             <th>Month</th>
             <th>Butget</th>
-            <th>Actions</th>
+            <th *ngIf="user">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
             <td><span *ngIf="!list.isEditing">{{list.budget}}</span>
                 <input *ngIf="list.isEditing" type="number" [(ngModel)]="list.budget" />
             </td>
-            <td>
+            <td *ngIf="user">
                 <ng-container *ngIf="!list.isEditing">
                     <button class="btn btn-outline-warning me-2" (click)="startEditing(list)"><i
                             class="bi bi-plus-circle"></i></button>
@@ -29,7 +29,7 @@
                             class="bi bi-trash3-fill"></i></button>
                 </ng-container>
 
-                <ng-container *ngIf="list.isEditing">
+                <ng-container *ngIf="list.isEditing && user">
                     <button class="btn btn-outline-success me-2" (click)="update(list)">
                         <i class="bi bi-floppy-fill"></i>
                     </button>

@@ -6,41 +6,46 @@
             <th>Amount</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Actions</th>
+            <th *ngIf="user">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let e of expenses">
+        <tr *ngFor="let expense of expensesExtended">
+
             <td>
-                <span>{{ e.expenseDate }}</span>
+                <span *ngIf="!expense.isEditing">{{ expense.expenseDate }}</span>
+                <input *ngIf="expense.isEditing" type="date" [(ngModel)]="expense.expenseDate" />
 
             </td>
             <td>
-                <span>{{ e.name }}</span>
+                <span *ngIf="!expense.isEditing">{{ expense.name }}</span>
+                <input *ngIf="expense.isEditing" type="text" [(ngModel)]="expense.name" />
             </td>
             <td>
-                <span>{{ e.amount }} €</span>
+                <span *ngIf="!expense.isEditing">{{ expense.amount }} €</span>
+                <input *ngIf="expense.isEditing" type="number" [(ngModel)]="expense.amount" />
             </td>
             <td>
-                <span>{{ e.description }}</span>
+                <span *ngIf="!expense.isEditing">{{ expense.description }}</span>
+                <input *ngIf="expense.isEditing" type="text" [(ngModel)]="expense.description" />
             </td>
             <td>
                 <span></span>
             </td>
-            <td>
-                <ng-container>
-                    <button class="btn btn-outline-warning me-2" >
+            <td *ngIf="user">
+                <ng-container *ngIf="!expense.isEditing">
+                    <button class="btn btn-outline-warning me-2" (click)="startEditing(expense)">
                         <i class="bi bi-plus-circle"></i>
                     </button>
-                    <button class="btn btn-outline-danger me-2">
+                    <button class="btn btn-outline-danger me-2" (click)="openModal(removeList.bind(this), expense.id!)">
                         <i class="bi bi-trash3-fill"></i>
                     </button>
                 </ng-container>
-                <ng-container>
-                    <button class="btn btn-outline-success me-2">
+                <ng-container *ngIf="expense.isEditing">
+                    <button class="btn btn-outline-success me-2" (click)="update(expense)">
                         <i class="bi bi-floppy-fill"></i>
                     </button>
-                    <button class="btn btn-danger me-2">
+                    <button class="btn btn-danger me-2" (click)="cancel(expense)">
                         <i class="bi bi-x-circle bi"></i>
                     </button>
 

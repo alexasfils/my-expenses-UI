@@ -29,9 +29,9 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
 
   @Output() onDeleteList = new EventEmitter<number>();
   @Output() onUpdateExpenseList = new EventEmitter<ExpenseListDTO>();
-
   [key: string]: any;
-  user?: UserAuthDTO;
+  @Input() user?: UserAuthDTO;
+
   constructor(private router: Router, private modalService: NgbModal) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,7 +47,6 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
     this.expencesListExtended = this.expenseLists.map(
       (expenceListExtended) => ({
         ...expenceListExtended,
-        month: Number(expenceListExtended.month),
         isEditing: false,
       })
     );
@@ -81,9 +80,6 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
       alert('Write element');
       return;
     }
-    console.log('Updating item:', item);
-    item.month = Number(item.month);
-
     item.isEditing = false;
     this.onUpdateExpenseList.emit(item);
   }

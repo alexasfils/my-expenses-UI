@@ -2,7 +2,7 @@
     Add Expense
 </button>
 
-<app-expense-table [expenses]="expenseList?.expenses || []" [totalExpense]="expenseList?.totalExpense || 0"></app-expense-table>
+<app-expense-table (onUpdateExpense)="updateExpense($event)" (onDeleteList)="deleteExpense($event)" [expenses]="expenseList?.expenses || []" [totalExpense]="expenseList?.totalExpense || 0" [user]="user"></app-expense-table>
 
 <div *ngIf="showExpenseFormModal" class="custom-modal-backdrop">
   <div class="modal-body">
