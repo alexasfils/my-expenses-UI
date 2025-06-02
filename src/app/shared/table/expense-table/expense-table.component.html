@@ -1,4 +1,3 @@
-
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,18 +11,41 @@
     </thead>
     <tbody>
         <tr *ngFor="let e of expenses">
-            <td>{{ e.expenseDate }}</td>
-            <td>{{ e.name }}</td>
-            <td>{{ e.amount }} €</td>
-            <td>{{ e.description }}</td>
-            <td></td>
             <td>
-                <button class="btn btn-outline-success me-2">
-                    <i class="bi bi-plus-circle"></i>
-                </button> 
-                <button class="btn btn-outline-danger me-2">
-                    <i class="bi bi-trash3-fill"></i>
-                </button>
+                <span>{{ e.expenseDate }}</span>
+
+            </td>
+            <td>
+                <span>{{ e.name }}</span>
+            </td>
+            <td>
+                <span>{{ e.amount }} €</span>
+            </td>
+            <td>
+                <span>{{ e.description }}</span>
+            </td>
+            <td>
+                <span></span>
+            </td>
+            <td>
+                <ng-container>
+                    <button class="btn btn-outline-warning me-2" >
+                        <i class="bi bi-plus-circle"></i>
+                    </button>
+                    <button class="btn btn-outline-danger me-2">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </ng-container>
+                <ng-container>
+                    <button class="btn btn-outline-success me-2">
+                        <i class="bi bi-floppy-fill"></i>
+                    </button>
+                    <button class="btn btn-danger me-2">
+                        <i class="bi bi-x-circle bi"></i>
+                    </button>
+
+                </ng-container>
+
             </td>
         </tr>
         <tr>
@@ -33,7 +55,7 @@
             <td></td>
             <td></td>
             <td>Totale: {{ totalExpense }} €</td>
-            
+
         </tr>
     </tbody>
 </table>

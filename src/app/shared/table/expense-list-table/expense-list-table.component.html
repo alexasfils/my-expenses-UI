@@ -1,24 +1,46 @@
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Month</th>
-                <th>Butget</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let list of expenseLists">
-                <td><a [routerLink]="['/expense-list', list.id]" class="link-offset-2 link-underline link-underline-opacity-0">{{list.name}}</a></td>
-                <td>{{list.month}}</td>
-                <td>{{list.budget}}</td>
-                <td>
-                    <button [routerLink]="['/manage-list', list.id]" class="btn btn-outline-success me-2"><i
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Month</th>
+            <th>Butget</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let list of expencesListExtended">
+            <td><a [routerLink]="['/expense-list', list.id]"
+                    class="link-offset-2 link-underline link-underline-opacity-0">
+                    <span *ngIf="!list.isEditing">{{list.name}}</span>
+                </a>
+                <input *ngIf="list.isEditing" type="text" [(ngModel)]="list.name" />
+            </td>
+            <td><span *ngIf="!list.isEditing">{{list.month}}</span>
+                <input *ngIf="list.isEditing" type="number" [(ngModel)]="list.month" />
+            </td>
+            <td><span *ngIf="!list.isEditing">{{list.budget}}</span>
+                <input *ngIf="list.isEditing" type="number" [(ngModel)]="list.budget" />
+            </td>
+            <td>
+                <ng-container *ngIf="!list.isEditing">
+                    <button class="btn btn-outline-warning me-2" (click)="startEditing(list)"><i
                             class="bi bi-plus-circle"></i></button>
-                    <button class="btn btn-outline-danger me-2" (click)="openModal(removeList.bind(this), list.id)"><i class="bi bi-trash3-fill"></i></button>
+                    <button class="btn btn-outline-danger me-2" (click)="openModal(removeList.bind(this), list.id)"><i
+                            class="bi bi-trash3-fill"></i></button>
+                </ng-container>
 
-                    
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                <ng-container *ngIf="list.isEditing">
+                    <button class="btn btn-outline-success me-2" (click)="update(list)">
+                        <i class="bi bi-floppy-fill"></i>
+                    </button>
+                    <button class="btn btn-danger me-2" (click)="cancel(list)">
+                        <i class="bi bi-x-circle bi"></i>
+                    </button>
+                </ng-container>
+
+
+
+            </td>
+        </tr>
+    </tbody>
+</table>

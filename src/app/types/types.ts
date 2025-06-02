@@ -24,6 +24,10 @@ export type ExpenseListDTO = {
   expenses: ExpenseDTO[];
 };
 
+export type ExpenseListExtended = ExpenseListDTO & {
+  isEditing: boolean;
+};
+
 export type ExpenseDTO = {
   id?: number;
   name: string;
@@ -32,4 +36,8 @@ export type ExpenseDTO = {
   description?: string;
   categoryId: number;
   expenseListId: number;
+};
+
+export type ExpenseExtended = ExpenseDTO & {
+  isEditing: boolean;
 };

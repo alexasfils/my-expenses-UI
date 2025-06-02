@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ExpenseListDTO, UserAuthDTO } from '../../types/types';
 import { ExpenseListService } from '../../services/expenses/expense-list.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { DemoService } from '../../services/demo/demo.service';
 })
 export class ExpenselistpageComponent {
   expenseLists: ExpenseListDTO[] = [];
+  listToUpdate?: ExpenseListDTO;
   user?: UserAuthDTO;
 
   constructor(
@@ -63,5 +64,19 @@ export class ExpenselistpageComponent {
 
   toDetailsPage(id: number) {
     this.router.navigate(['/expense-list', id]);
+  }
+
+  updateExpencceList(expenseList: ExpenseListDTO) {
+    console.log('Received update:', expenseList);
+    this.expenseListService.updateUserExpenseList(expenseList).subscribe({
+      next: (res) => {
+        console.log('Update response:', res);
+        this.getExpesesLista();
+        console.log('List Updated succesfully');
+      },
+      error: (err) => {
+        console.error('Updating falid', err);
+      },
+    });
   }
 }
