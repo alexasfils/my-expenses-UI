@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ExpenseListDTO } from '../../types/types';
+import { ExpenseListDTO, PagedDataDTO } from '../../types/types';
 import { properties } from '../../../environments/environment';
 
 @Injectable({
@@ -12,8 +12,11 @@ export class ExpenseListService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUserExpensesLists(): Observable<ExpenseListDTO[]> {
-    return this.http.get<ExpenseListDTO[]>(`${this.baseUrl}/all`);
+  getAllUserExpensesLists(
+    page: number = 0,
+    size: number = 16
+  ): Observable<PagedDataDTO<ExpenseListDTO>> {
+    return this.http.get<PagedDataDTO<ExpenseListDTO>>(`${this.baseUrl}/all?page=${page}&size=${size}`);
   }
 
   getExpenseById(expenseListId: number): Observable<ExpenseListDTO> {
@@ -24,7 +27,9 @@ export class ExpenseListService {
     return this.http.post<ExpenseListDTO>(`${this.baseUrl}`, expenseList);
   }
 
-  updateUserExpenseList(expenseList: ExpenseListDTO): Observable<ExpenseListDTO> {
+  updateUserExpenseList(
+    expenseList: ExpenseListDTO
+  ): Observable<ExpenseListDTO> {
     return this.http.put<ExpenseListDTO>(`${this.baseUrl}/udate`, expenseList);
   }
 

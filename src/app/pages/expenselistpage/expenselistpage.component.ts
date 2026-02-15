@@ -1,8 +1,9 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ExpenseListDTO, UserAuthDTO } from '../../types/types';
 import { ExpenseListService } from '../../services/expenses/expense-list.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-expenselistpage',
@@ -14,10 +15,14 @@ export class ExpenselistpageComponent {
   listToUpdate?: ExpenseListDTO;
   user?: UserAuthDTO;
 
+  currentPage: number = 0;
+  totalPages: number = 0;
+
   constructor(
     private expenseListService: ExpenseListService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: ToastrService
   ) {
     this.authService.userDTOSubject$.subscribe((user) => (this.user = user));
   }
@@ -32,15 +37,18 @@ export class ExpenselistpageComponent {
     }
 
     if (this.user) {
-      this.expenseListService.getAllUserExpensesLists().subscribe({
-        next: (list) => {
-          this.expenseLists = list;
-          console.log('lista caricata:', this.expenseLists);
-        },
-        error: (err) => {
-          console.log(' Retrieving falid', err);
-        },
-      });
+      this.expenseListService
+        .getAllUserExpensesLists(this.currentPage, 2)
+        .subscribe({
+          next: (list) => {
+            this.expenseLists = [...list.content];
+            console.log('lista caricata:', this.expenseLists);
+            this.totalPages = list.totalPages;
+          },
+          error: (err) => {
+            console.log(' Retrieving falid', err);
+          },
+        });
     }
   }
 
@@ -48,11 +56,13 @@ export class ExpenselistpageComponent {
     if (this.user) {
       this.expenseListService.deleteExpenseListById(expenseListId).subscribe({
         next: () => {
+          this.toast.success('List Deleted successfully', 'Success');
           this.getExpesesLista();
           console.log('List Deleted succesfully');
         },
         error: (err) => {
           console.log('Deleting falid', err);
+          this.getExpesesLista();
         },
       });
     }
@@ -63,9 +73,10 @@ export class ExpenselistpageComponent {
   }
 
   updateExpencceList(expenseList: ExpenseListDTO) {
-    if (this.user) { 
+    if (this.user) {
       this.expenseListService.updateUserExpenseList(expenseList).subscribe({
         next: (res) => {
+          this.toast.success('List Updated successfully', 'Success');
           this.getExpesesLista();
           console.log('List Updated succesfully');
         },
@@ -74,6 +85,10 @@ export class ExpenselistpageComponent {
         },
       });
     }
+  }
 
-    }
+  onPageChange(currentPage: number) {
+    this.currentPage = currentPage;
+    this.getExpesesLista();
+  }
 }

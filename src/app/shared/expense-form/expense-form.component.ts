@@ -1,28 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExpenseDTO, ExpenseListDTO, UserAuthDTO } from '../../types/types';
+import { CategoryDTO, ExpenseDTO, ExpenseListDTO, UserAuthDTO } from '../../types/types';
 import { DemoService } from '../../services/demo/demo.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { ExpenseService } from '../../services/expense/expense.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-expense-form',
   templateUrl: './expense-form.component.html',
   styleUrl: './expense-form.component.scss',
 })
-export class ExpenseFormComponent {
+export class ExpenseFormComponent implements OnInit{
   @Output() onCreatedExpense = new EventEmitter<ExpenseDTO>();
   @Input() list!: ExpenseListDTO;
   @Input() IsSowed = true;
   @Output() close = new EventEmitter<void>();
 
   expenses: ExpenseDTO[] = [];
-  expense: ExpenseDTO | null = null;
+  expense!: ExpenseDTO;
   expenseForm!: FormGroup;
   user?: UserAuthDTO;
+  categories?: CategoryDTO [];
 
   constructor(
     private expenseService: ExpenseService,
+    private categoriesService: CategoriesService,
     private demoService: DemoService,
     private authService: AuthService,
     private fb: FormBuilder
@@ -33,9 +36,17 @@ export class ExpenseFormComponent {
 
     this.expenseForm = this.fb.group({
       name: ['', Validators.required],
+      categoryName: [0],
       amount: [0, [Validators.required, Validators.min(0.01)]],
       date: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
+    });
+  }
+  ngOnInit(): void {
+    this.categoriesService.getAllCategories().subscribe((cats) => {
+      this.categories = cats;
+      console.log('Categorie caricate' , cats);
+      
     });
   }
 
@@ -47,7 +58,7 @@ export class ExpenseFormComponent {
       name: this.expenseForm.value.name,
       amount: this.expenseForm.value.amount,
       expenseDate: this.expenseForm.value.date,
-      categoryId: 1,
+      categoryName: this.expenseForm.value.categoryName,
       description: this.expenseForm.value.description,
       expenseListId: this.list.id,
     };

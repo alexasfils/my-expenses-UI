@@ -7,10 +7,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { ExpenseDTO, ExpenseExtended, UserAuthDTO } from '../../../types/types';
+import { CategoryDTO, ExpenseDTO, ExpenseExtended, UserAuthDTO } from '../../../types/types';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../modals/modal/modal.component';
+import { CategoriesService } from './../../../services/categories.service';
 
 @Component({
   selector: 'app-expense-table',
@@ -21,16 +22,24 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
   @Input() expenses: ExpenseDTO[] = [];
   @Input() totalExpense: number | null = null;
   expensesExtended: ExpenseExtended[] = [];
+  categories!: CategoryDTO[];
 
   @Output() onDeleteList = new EventEmitter<number>();
   @Output() onUpdateExpense = new EventEmitter<ExpenseDTO>();
   [key: string]: any;
   @Input() user?: UserAuthDTO;
 
-  constructor(private router: Router, private modalService: NgbModal) {}
+  constructor(
+    private categoriesService: CategoriesService,
+    private router: Router,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadExpenceListWithEditing();
+    this.categoriesService.getAllCategories().subscribe((cats) => {
+      this.categories = cats;
+      console.log('Categorie caricate', cats);
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['expenses'] && changes['expenses'].currentValue) {

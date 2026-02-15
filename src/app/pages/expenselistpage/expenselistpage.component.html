@@ -1,3 +1,15 @@
 <h1>My Expenses List</h1>
 
-<app-expense-list-table (onDeleteList)="deleteExpenseList($event)" (onUpdateExpenseList)="updateExpencceList($event)" [expenseLists]="expenseLists" [user]="user"></app-expense-list-table>
+<div class="expense-list-page-container">
+
+    <div class="grid-view">
+        <app-expense-list-table (onDeleteList)="deleteExpenseList($event)"
+            (onUpdateExpenseList)="updateExpencceList($event)" [expenseLists]="expenseLists" [user]="user">
+        </app-expense-list-table>
+
+        <app-pagination-grid [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+        </app-pagination-grid>
+    </div>
+
+
+</div>

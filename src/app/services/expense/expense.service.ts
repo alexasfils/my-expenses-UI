@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { properties } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { ExpenseDTO } from '../../types/types';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ExpenseDTO, PagedDataDTO } from '../../types/types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,16 @@ export class ExpenseService {
   private baseUrl: String = `${properties.baseUrl}${properties.separator}${properties.domainApi}/expense`;
 
   constructor(private http: HttpClient) {}
+
+  getAllExpensesbyListId(
+    expenseListId: number,
+    page: number = 0,
+    size: number = 16
+  ): Observable<PagedDataDTO<ExpenseDTO>> {
+    return this.http.get<PagedDataDTO<ExpenseDTO>>(
+      `${this.baseUrl}/all/${expenseListId}?page=${page}&size=${size}`
+    );
+  }
 
   createExpense(expense: ExpenseDTO): Observable<ExpenseDTO> {
     return this.http.post<ExpenseDTO>(`${this.baseUrl}`, expense);
