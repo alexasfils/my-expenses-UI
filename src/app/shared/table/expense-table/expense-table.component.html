@@ -30,7 +30,12 @@
                 <input *ngIf="expense.isEditing" type="text" [(ngModel)]="expense.description" />
             </td>
             <td>
-                <span></span>
+                 <span *ngIf="!expense.isEditing">{{ expense.categoryName }}</span>
+                <select *ngIf="expense.isEditing" [(ngModel)]="expense.categoryName" #categoryName>
+                    <option *ngFor="let category of categories" [value]="category.name">
+                        {{ category.name }}
+                    </option>
+                </select>
             </td>
             <td *ngIf="user">
                 <ng-container *ngIf="!expense.isEditing">

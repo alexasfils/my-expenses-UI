@@ -32,6 +32,12 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
   [key: string]: any;
   @Input() user?: UserAuthDTO;
 
+  inputName: string = '';
+  inputMonth: number | null = null;
+  inputBudget: number = 0.0;
+
+  private backups: Map<number, any> = new Map();
+
   constructor(private router: Router, private modalService: NgbModal) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,11 +54,18 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
       (expenceListExtended) => ({
         ...expenceListExtended,
         isEditing: false,
+        originalName: '',
       })
     );
   }
 
   startEditing(item: ExpenseListExtended) {
+    this.backups.set(item.id, { ...item });
+
+    this.inputName = item.name;
+    this.inputMonth = item.month;
+    this.inputBudget = 0.0;
+
     item.isEditing = true;
   }
 
@@ -80,11 +93,33 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
       alert('Write element');
       return;
     }
+    const updatedListData: ExpenseListDTO = {
+      ...item, // prendiamo l'id e gli altri campi
+      name: this.inputName,
+      month: this.inputMonth ?? item.month,
+      budget: this.inputBudget,
+    };
+
     item.isEditing = false;
-    this.onUpdateExpenseList.emit(item);
+    this.onUpdateExpenseList.emit(updatedListData);
+
+    this.resetInputs();
   }
 
   cancel(item: ExpenseListExtended) {
+    const backup = this.backups.get(item.id);
+    if (backup) {
+      item.name = backup.name;
+      item.month = backup.month;
+      item.budget = backup.budget;
+    }
+
     item.isEditing = false;
+  }
+
+  private resetInputs() {
+    this.inputName = '';
+    this.inputMonth = null;
+    this.inputBudget = 0;
   }
 }

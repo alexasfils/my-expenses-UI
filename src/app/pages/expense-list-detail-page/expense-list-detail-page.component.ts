@@ -16,6 +16,9 @@ export class ExpenseListDetailPageComponent implements OnInit {
   user?: UserAuthDTO;
   expenseId?: number;
 
+  currentPage: number = 0;
+  totalPages: number = 0;
+
   showExpenseFormModal = false;
   selectedList!: ExpenseListDTO;
 
@@ -45,10 +48,24 @@ export class ExpenseListDetailPageComponent implements OnInit {
         },
       });
     } else {
+      //Da fixare Paginatore
       this.expenseListService.getExpenseById(id).subscribe({
         next: (list) => {
           this.expenseList = list;
           console.log('La lista caricata', this.expenseList);
+          this.expenseService
+            .getAllExpensesbyListId(id, this.currentPage, 2)
+            .subscribe({
+              next: (response) => {
+                console.log('response.content', response.content);
+                this.expenseList!.expenses = response.content;
+                console.log('La lista caricata', this.expenseList!.expenses);
+                this.totalPages = response.totalPages;
+              },
+              error(err) {
+                console.log('Falied to find list', err);
+              },
+            });
         },
         error(err) {
           console.log('Falied to find list', err);
@@ -113,5 +130,10 @@ export class ExpenseListDetailPageComponent implements OnInit {
       this.getExpenseList(this.expenseList.id);
     }
     this.showExpenseFormModal = false;
+  }
+
+  onPageChange(currentPage: number) {
+    this.currentPage = currentPage;
+    this.getExpenseList(this.expenseList!.id);
   }
 }

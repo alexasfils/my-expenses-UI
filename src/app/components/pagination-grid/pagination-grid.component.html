@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-end align-items-center">
+    <div class="pagination-controls">
+        <span class="pagination-text">{{ currentPage + 1 }} / {{ totalPages }} </span>
+        <!-- Visualizza numero di pagina corrente -->
+        <button _ngcontent-ega-c32 class="btn-page" (click)="prevPage()" [disabled]="currentPage === 0">
+            <i _ngcontent-ega-c32 class="fas fa-chevron-left btn-icons"></i> <!-- Icona per andare indietro -->
+        </button>
+
+        <button _ngcontent-ega-c32 class="btn-page" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+            <i _ngcontent-ega-c32 class="fas fa-chevron-right btn-icons"></i> <!-- Icona per andare avanti -->
+        </button>
+    </div>
+    </div>

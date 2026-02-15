@@ -13,13 +13,13 @@
                     class="link-offset-2 link-underline link-underline-opacity-0">
                     <span *ngIf="!list.isEditing">{{list.name}}</span>
                 </a>
-                <input *ngIf="list.isEditing" type="text" [(ngModel)]="list.name" />
+                <input *ngIf="list.isEditing" type="text" [(ngModel)]="inputName" />
             </td>
             <td><span *ngIf="!list.isEditing">{{list.month}}</span>
-                <input *ngIf="list.isEditing" type="number" [(ngModel)]="list.month" />
+                <input *ngIf="list.isEditing" type="number" [(ngModel)]="inputMonth" />
             </td>
             <td><span *ngIf="!list.isEditing">{{list.budget}}</span>
-                <input *ngIf="list.isEditing" type="number" [(ngModel)]="list.budget" />
+                <input *ngIf="list.isEditing" type="number" [(ngModel)]="inputBudget" />
             </td>
             <td *ngIf="user">
                 <ng-container *ngIf="!list.isEditing">
@@ -37,9 +37,6 @@
                         <i class="bi bi-x-circle bi"></i>
                     </button>
                 </ng-container>
-
-
-
             </td>
         </tr>
     </tbody>

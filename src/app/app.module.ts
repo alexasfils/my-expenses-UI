@@ -22,6 +22,10 @@ import { ExpenseListDetailPageComponent } from './pages/expense-list-detail-page
 import { ExpenseFormComponent } from './shared/expense-form/expense-form.component';
 import { ExpenseTableComponent } from './shared/table/expense-table/expense-table.component';
 import { ModalComponent } from './shared/modals/modal/modal.component';
+import { PaginationGridComponent } from './components/pagination-grid/pagination-grid.component';
+import { ErrorInterceptor } from './services/exceptions/interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,7 @@ import { ModalComponent } from './shared/modals/modal/modal.component';
     ExpenseFormComponent,
     ExpenseTableComponent,
     ModalComponent,
+    PaginationGridComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,11 +54,23 @@ import { ModalComponent } from './shared/modals/modal/modal.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule, // Aggiunto per le animazioni dei popup
+    ToastrModule.forRoot({
+      // Aggiunto per configurare Toastr
+      timeOut: 4000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

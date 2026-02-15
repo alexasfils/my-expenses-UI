@@ -1,8 +1,11 @@
 <button (click)="openExpenseModalForm()" class="btn btn-outline-primary">
     Add Expense
 </button>
+<div>
+  <app-expense-table (onUpdateExpense)="updateExpense($event)" (onDeleteList)="deleteExpense($event)" [expenses]="expenseList?.expenses || []" [totalExpense]="expenseList?.totalExpense || 0" [user]="user"></app-expense-table>
 
-<app-expense-table (onUpdateExpense)="updateExpense($event)" (onDeleteList)="deleteExpense($event)" [expenses]="expenseList?.expenses || []" [totalExpense]="expenseList?.totalExpense || 0" [user]="user"></app-expense-table>
+  <app-pagination-grid [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+  </app-pagination-grid></div>
 
 <div *ngIf="showExpenseFormModal" class="custom-modal-backdrop">
   <div class="modal-body">

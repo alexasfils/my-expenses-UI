@@ -34,10 +34,29 @@ export type ExpenseDTO = {
   amount: number;
   expenseDate: string;
   description?: string;
-  categoryId: number;
+  categoryName: string;
   expenseListId: number;
 };
 
 export type ExpenseExtended = ExpenseDTO & {
   isEditing: boolean;
 };
+
+export type CategoryDTO = {
+  id: number;
+  name: string;
+  color: string;
+  isDefault: number;
+  expenses: ExpenseDTO[];
+};
+
+// Interfacec//////
+
+export interface PagedDataDTO<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
+
