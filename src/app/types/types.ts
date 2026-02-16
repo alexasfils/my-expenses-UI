@@ -33,7 +33,7 @@ export type ExpenseDTO = {
   name: string;
   amount: number;
   expenseDate: string;
-  description?: string;
+  description: string;
   categoryName: string;
   expenseListId: number;
 };
