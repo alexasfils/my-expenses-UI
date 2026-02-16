@@ -14,7 +14,7 @@ import { ExpenseService } from '../../services/expense/expense.service';
 export class ExpenseListDetailPageComponent implements OnInit {
   expenseList: ExpenseListDTO | null = null;
   user?: UserAuthDTO;
-  expenseId?: number;
+  expenseListId?: number;
 
   currentPage: number = 0;
   totalPages: number = 0;
@@ -27,13 +27,13 @@ export class ExpenseListDetailPageComponent implements OnInit {
     private expenseService: ExpenseService,
     private demoService: DemoService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.authService.userDTOSubject$.subscribe((user) => (this.user = user));
   }
   ngOnInit(): void {
-    this.expenseId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getExpenseList(this.expenseId);
+    this.expenseListId = Number(this.route.snapshot.paramMap.get('id'));
+    this.getExpenseList(this.expenseListId);
   }
 
   getExpenseList(id: number) {
@@ -77,7 +77,7 @@ export class ExpenseListDetailPageComponent implements OnInit {
   updateExpense(expense: ExpenseDTO) {
     this.expenseService.updateUserExpense(expense).subscribe({
       next: () => {
-        this.getExpenseList(this.expenseId!);
+        this.getExpenseList(this.expenseListId!);
         console.log('Expense Updated succesfully');
       },
       error: (err) => {
@@ -90,7 +90,7 @@ export class ExpenseListDetailPageComponent implements OnInit {
     if (this.user) {
       this.expenseService.deleteExpenseById(id).subscribe({
         next: () => {
-          this.getExpenseList(this.expenseId!);
+          this.getExpenseList(this.expenseListId!);
         },
         error: (err) => {
           console.log('Deleting falid', err);

@@ -7,7 +7,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CategoryDTO, ExpenseDTO, ExpenseExtended, UserAuthDTO } from '../../../types/types';
+import {
+  CategoryDTO,
+  ExpenseDTO,
+  ExpenseExtended,
+  UserAuthDTO,
+} from '../../../types/types';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../modals/modal/modal.component';
@@ -21,6 +26,7 @@ import { CategoriesService } from './../../../services/categories.service';
 export class ExpenseTableComponent implements OnInit, OnChanges {
   @Input() expenses: ExpenseDTO[] = [];
   @Input() totalExpense: number | null = null;
+  @Input() expenseListId: number | null = null;
   expensesExtended: ExpenseExtended[] = [];
   categories!: CategoryDTO[];
 
@@ -29,10 +35,19 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
   [key: string]: any;
   @Input() user?: UserAuthDTO;
 
+  inputExpenceDate: string = '';
+  inputExpenseName: string = '';
+  inputAmount: number | null = null;
+  inputDescription: string = '';
+  inputCategoryName: string = '';
+
+  private backupsExpense: Map<number, any> = new Map();
+
   constructor(
     private categoriesService: CategoriesService,
     private router: Router,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit(): void {
     this.loadExpenceListWithEditing();
@@ -55,6 +70,14 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
   }
 
   startEditing(item: ExpenseExtended) {
+    this.backupsExpense.set(item.id!, { ...item });
+
+    this.inputExpenceDate = item.expenseDate;
+    this.inputExpenseName = item.name;
+    this.inputAmount = item.amount;
+    this.inputDescription = item.description;
+    this.inputCategoryName = item.categoryName;
+
     item.isEditing = true;
   }
 
@@ -78,11 +101,28 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
       alert('Write element');
       return;
     }
+    const updatedExpense: ExpenseDTO = {
+      name: this.inputExpenseName,
+      amount: this.inputAmount!,
+      expenseDate: this.inputExpenceDate,
+      description: this.inputDescription,
+      categoryName: this.inputCategoryName,
+      expenseListId: this.expenseListId!,
+    };
     item.isEditing = false;
-    this.onUpdateExpense.emit(item);
+    this.onUpdateExpense.emit(updatedExpense);
+    this.resetInputs();
   }
 
   cancel(item: ExpenseExtended) {
     item.isEditing = false;
+  }
+
+  private resetInputs() {
+    this.inputExpenceDate = '';
+    this.inputExpenseName = '';
+    this.inputAmount = 0;
+    this.inputDescription = '';
+    this.inputCategoryName = '';
   }
 }
