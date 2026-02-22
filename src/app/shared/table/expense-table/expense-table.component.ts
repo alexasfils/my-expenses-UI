@@ -13,7 +13,6 @@ import {
   ExpenseExtended,
   UserAuthDTO,
 } from '../../../types/types';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../modals/modal/modal.component';
 import { CategoriesService } from './../../../services/categories.service';
@@ -45,7 +44,6 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
 
   constructor(
     private categoriesService: CategoriesService,
-    private router: Router,
     private modalService: NgbModal,
   ) {}
 
@@ -102,12 +100,12 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
       return;
     }
     const updatedExpense: ExpenseDTO = {
+      ...item,
       name: this.inputExpenseName,
       amount: this.inputAmount!,
       expenseDate: this.inputExpenceDate,
       description: this.inputDescription,
       categoryName: this.inputCategoryName,
-      expenseListId: this.expenseListId!,
     };
     item.isEditing = false;
     this.onUpdateExpense.emit(updatedExpense);
@@ -124,5 +122,6 @@ export class ExpenseTableComponent implements OnInit, OnChanges {
     this.inputAmount = 0;
     this.inputDescription = '';
     this.inputCategoryName = '';
+    this.expenseListId = null;
   }
 }

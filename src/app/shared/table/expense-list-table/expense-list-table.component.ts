@@ -94,7 +94,7 @@ export class ExpenseListTableComponent implements OnInit, OnChanges {
       return;
     }
     const updatedListData: ExpenseListDTO = {
-      ...item, // prendiamo l'id e gli altri campi
+      ...item,
       name: this.inputName,
       month: this.inputMonth ?? item.month,
       budget: this.inputBudget,
